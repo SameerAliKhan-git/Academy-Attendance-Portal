@@ -21,6 +21,15 @@ def create_app(config_name='development'):
     login_manager.login_view = 'auth.login'
     login_manager.login_message = 'Please log in to access this page.'
     login_manager.login_message_category = 'info'
+
+    # Ensure database tables exist (useful for first deploys)
+    @app.before_first_request
+    def _create_tables_if_missing():
+        try:
+            db.create_all()
+        except Exception:
+            # Avoid breaking startup if DB is misconfigured; errors will surface in logs
+            pass
     
     # Register blueprints
     from app.routes.auth import auth_bp
