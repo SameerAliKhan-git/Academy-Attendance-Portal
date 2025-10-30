@@ -22,14 +22,13 @@ def create_app(config_name='development'):
     login_manager.login_message = 'Please log in to access this page.'
     login_manager.login_message_category = 'info'
 
-    # Ensure database tables exist (useful for first deploys)
-    @app.before_first_request
-    def _create_tables_if_missing():
-        try:
+    # Ensure database tables exist once app context is available (Flask 3 removed before_first_request)
+    try:
+        with app.app_context():
             db.create_all()
-        except Exception:
-            # Avoid breaking startup if DB is misconfigured; errors will surface in logs
-            pass
+    except Exception:
+        # Avoid breaking startup if DB is misconfigured; errors will surface in logs
+        pass
     
     # Register blueprints
     from app.routes.auth import auth_bp
