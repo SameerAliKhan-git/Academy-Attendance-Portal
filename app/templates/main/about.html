@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2><i class="bi bi-info-circle"></i> About Academy Attendance System</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-book"></i> Project Overview</h5>
+            </div>
+            <div class="card-body">
+                <p class="lead">
+                    The Academy Attendance System is a comprehensive web-based solution designed to streamline 
+                    attendance tracking and communication between students, parents, and faculty members.
+                </p>
+                <hr>
+                <h6><i class="bi bi-check-circle text-success"></i> Key Features</h6>
+                <ul>
+                    <li>Real-time attendance tracking and monitoring</li>
+                    <li>Role-based dashboards for different user types</li>
+                    <li>Department announcements and updates</li>
+                    <li>Assignment posting with file attachments</li>
+                    <li>Important notices and alerts</li>
+                    <li>Detailed attendance logs and reports</li>
+                    <li>Mobile-responsive design</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-people"></i> User Roles</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-person-badge text-primary"></i> Students
+                                </h6>
+                                <ul class="small">
+                                    <li>View attendance percentage</li>
+                                    <li>Access detailed attendance logs</li>
+                                    <li>View announcements and assignments</li>
+                                    <li>Download shared files</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-person-hearts text-success"></i> Parents
+                                </h6>
+                                <ul class="small">
+                                    <li>Monitor child's attendance</li>
+                                    <li>View all school communications</li>
+                                    <li>Access assignments and notices</li>
+                                    <li>Download shared documents</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-person-workspace text-warning"></i> Teachers
+                                </h6>
+                                <ul class="small">
+                                    <li>Manage department students</li>
+                                    <li>Mark and track attendance</li>
+                                    <li>Create announcements and assignments</li>
+                                    <li>Upload files for students</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-shield-check text-danger"></i> Administrators
+                                </h6>
+                                <ul class="small">
+                                    <li>Full system access</li>
+                                    <li>User management</li>
+                                    <li>Department administration</li>
+                                    <li>Generate system reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="bi bi-gear"></i> Technology Stack</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="bi bi-code-slash"></i> Backend</h6>
+                        <ul>
+                            <li>Flask 3.0.0 (Python Web Framework)</li>
+                            <li>SQLAlchemy (Database ORM)</li>
+                            <li>Flask-Login (Authentication)</li>
+                            <li>Flask-WTF (Forms)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="bi bi-palette"></i> Frontend</h6>
+                        <ul>
+                            <li>HTML5 & CSS3</li>
+                            <li>Bootstrap 5 (UI Framework)</li>
+                            <li>JavaScript (Interactivity)</li>
+                            <li>Bootstrap Icons</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="bi bi-code-square"></i> Development Team</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Team B - Web & Dashboard Development</strong></p>
+                <p class="mb-0">
+                    Responsible for designing and developing the user-facing dashboards, 
+                    implementing authentication systems, integrating with backend APIs, 
+                    and ensuring a responsive, user-friendly experience across all devices.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

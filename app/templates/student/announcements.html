@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2><i class="bi bi-megaphone"></i> Announcements</h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Announcements</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Filter Buttons -->
+<div class="row mb-4">
+    <div class="col">
+        <div class="btn-group" role="group">
+            <a href="{{ url_for('student.announcements') }}" 
+               class="btn btn-outline-primary">
+                <i class="bi bi-list"></i> All
+            </a>
+            <a href="{{ url_for('announcements.list_all', type='announcement') }}" 
+               class="btn btn-outline-info">
+                <i class="bi bi-megaphone"></i> Announcements
+            </a>
+            <a href="{{ url_for('announcements.list_all', type='assignment') }}" 
+               class="btn btn-outline-warning">
+                <i class="bi bi-file-earmark-text"></i> Assignments
+            </a>
+            <a href="{{ url_for('announcements.list_all', type='notice') }}" 
+               class="btn btn-outline-danger">
+                <i class="bi bi-exclamation-circle"></i> Notices
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Announcements List -->
+<div class="row">
+    <div class="col-md-12">
+        {% if announcements %}
+            {% for announcement in announcements %}
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            {% if announcement.announcement_type == 'assignment' %}
+                                <i class="bi bi-file-earmark-text text-primary announcement-icon"></i>
+                            {% elif announcement.announcement_type == 'notice' %}
+                                <i class="bi bi-exclamation-circle text-warning announcement-icon"></i>
+                            {% else %}
+                                <i class="bi bi-megaphone text-info announcement-icon"></i>
+                            {% endif %}
+                            <strong>{{ announcement.title }}</strong>
+                        </div>
+                        <div>
+                            <span class="badge 
+                                {% if announcement.announcement_type == 'assignment' %}bg-primary
+                                {% elif announcement.announcement_type == 'notice' %}bg-warning
+                                {% else %}bg-info{% endif %}">
+                                {{ announcement.announcement_type.capitalize() }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ announcement.content[:200] }}{% if announcement.content|length > 200 %}...{% endif %}</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted small">
+                                <i class="bi bi-person"></i> {{ announcement.author.full_name }}
+                                <span class="mx-2">|</span>
+                                <i class="bi bi-calendar"></i> {{ announcement.created_at.strftime('%b %d, %Y %I:%M %p') }}
+                                {% if announcement.department %}
+                                    <span class="mx-2">|</span>
+                                    <i class="bi bi-building"></i> {{ announcement.department.name }}
+                                {% endif %}
+                            </div>
+                            <a href="{{ url_for('announcements.view', announcement_id=announcement.id) }}" 
+                               class="btn btn-sm btn-outline-primary">
+                                Read More <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-inbox icon-xlarge text-muted"></i>
+                    <p class="text-muted mt-3">No announcements available</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

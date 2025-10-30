@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2><i class="bi bi-shield-check"></i> Admin Dashboard</h2>
+        <p class="text-muted">System Overview and Management</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-primary">
+            <div class="card-body">
+                <i class="bi bi-people text-primary icon-large"></i>
+                <h4 class="mt-2">{{ stats.total_users }}</h4>
+                <p class="text-muted mb-0 small">Total Users</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-info">
+            <div class="card-body">
+                <i class="bi bi-person-badge text-info icon-large"></i>
+                <h4 class="mt-2">{{ stats.students }}</h4>
+                <p class="text-muted mb-0 small">Students</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-success">
+            <div class="card-body">
+                <i class="bi bi-person-hearts text-success icon-large"></i>
+                <h4 class="mt-2">{{ stats.parents }}</h4>
+                <p class="text-muted mb-0 small">Parents</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-warning">
+            <div class="card-body">
+                <i class="bi bi-person-workspace text-warning icon-large"></i>
+                <h4 class="mt-2">{{ stats.teachers }}</h4>
+                <p class="text-muted mb-0 small">Teachers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-danger">
+            <div class="card-body">
+                <i class="bi bi-building text-danger icon-large"></i>
+                <h4 class="mt-2">{{ stats.departments }}</h4>
+                <p class="text-muted mb-0 small">Departments</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="card text-center h-100 border-secondary">
+            <div class="card-body">
+                <i class="bi bi-megaphone text-secondary icon-large"></i>
+                <h4 class="mt-2">{{ stats.announcements }}</h4>
+                <p class="text-muted mb-0 small">Posts</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Users -->
+    <div class="col-lg-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-person-plus"></i> Recent Users</h5>
+                <a href="{{ url_for('admin.users') }}" class="btn btn-sm btn-light">View All</a>
+            </div>
+            <div class="card-body">
+                {% if recent_users %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in recent_users %}
+                                    <tr>
+                                        <td>{{ user.full_name }}</td>
+                                        <td>{{ user.username }}</td>
+                                        <td>
+                                            <span class="badge 
+                                                {% if user.role == 'student' %}bg-info
+                                                {% elif user.role == 'parent' %}bg-success
+                                                {% elif user.role == 'teacher' %}bg-warning
+                                                {% else %}bg-danger{% endif %}">
+                                                {{ user.role.capitalize() }}
+                                            </span>
+                                        </td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.created_at.strftime('%b %d, %Y') }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-5">No users yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Management -->
+    <div class="col-lg-4 mb-4">
+        <div class="card mb-3">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-gear"></i> System Management</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('admin.users') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-people"></i> Manage Users
+                    </a>
+                    <a href="{{ url_for('admin.departments') }}" class="btn btn-outline-info">
+                        <i class="bi bi-building"></i> Manage Departments
+                    </a>
+                    <a href="{{ url_for('admin.reports') }}" class="btn btn-outline-success">
+                        <i class="bi bi-graph-up"></i> View Reports
+                    </a>
+                    <a href="{{ url_for('announcements.create') }}" class="btn btn-outline-warning">
+                        <i class="bi bi-plus-circle"></i> Create Post
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> System Info</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Admin:</strong> {{ current_user.full_name }}</p>
+                <p class="mb-2"><strong>Email:</strong> {{ current_user.email }}</p>
+                <p class="mb-0"><strong>Access Level:</strong> <span class="badge bg-danger">Full Access</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

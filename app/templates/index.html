@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Hero Section -->
+        <div class="jumbotron bg-light p-5 rounded-3 mb-4">
+            <h1 class="display-4">
+                <i class="bi bi-calendar-check text-primary"></i> 
+                Welcome to Academy Attendance System
+            </h1>
+            <p class="lead">
+                Track attendance, view academic updates, and stay connected with your educational community.
+            </p>
+            <hr class="my-4">
+            <p>
+                Our system provides real-time attendance tracking, department announcements, 
+                and seamless communication between students, parents, and faculty.
+            </p>
+            {% if not current_user.is_authenticated %}
+                <div class="mt-4">
+                    <a class="btn btn-primary btn-lg me-2" href="{{ url_for('auth.login') }}" role="button">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('auth.register') }}" role="button">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                </div>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{{ url_for('main.dashboard') }}" role="button">
+                    <i class="bi bi-house-door"></i> Go to Dashboard
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- Features Section -->
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-graph-up-arrow text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Real-time Tracking</h5>
+                        <p class="card-text">
+                            Monitor attendance percentages and view detailed logs instantly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-megaphone text-success" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Announcements</h5>
+                        <p class="card-text">
+                            Stay updated with assignments, notices, and department news.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-people text-info" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Multi-Role Access</h5>
+                        <p class="card-text">
+                            Separate dashboards for students, parents, teachers, and admins.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

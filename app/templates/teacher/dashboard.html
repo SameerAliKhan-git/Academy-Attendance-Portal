@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2><i class="bi bi-house-door"></i> Teacher Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ current_user.full_name }}!</p>
+        {% if current_user.department %}
+            <p class="text-info"><i class="bi bi-building"></i> Department: <strong>{{ current_user.department.name }}</strong></p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card text-center h-100 border-primary">
+            <div class="card-body">
+                <i class="bi bi-people text-primary icon-large"></i>
+                <h3 class="mt-3">{{ students_count }}</h3>
+                <p class="text-muted mb-0">Students</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100 border-success">
+            <div class="card-body">
+                <i class="bi bi-megaphone text-success icon-large"></i>
+                <h3 class="mt-3">{{ announcements|length }}</h3>
+                <p class="text-muted mb-0">My Posts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100 border-info">
+            <div class="card-body">
+                <i class="bi bi-calendar-check text-info icon-large"></i>
+                <h3 class="mt-3">Today</h3>
+                <p class="text-muted mb-0">{{ now().strftime('%b %d, %Y') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- My Recent Posts -->
+    <div class="col-lg-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-post"></i> My Recent Posts</h5>
+                <a href="{{ url_for('announcements.create') }}" class="btn btn-sm btn-light">
+                    <i class="bi bi-plus-circle"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                {% if announcements %}
+                    <div class="list-group list-group-flush">
+                        {% for announcement in announcements %}
+                            <a href="{{ url_for('announcements.view', announcement_id=announcement.id) }}" 
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {% if announcement.announcement_type == 'assignment' %}
+                                            <i class="bi bi-file-earmark-text text-primary"></i>
+                                        {% elif announcement.announcement_type == 'notice' %}
+                                            <i class="bi bi-exclamation-circle text-warning"></i>
+                                        {% else %}
+                                            <i class="bi bi-megaphone text-info"></i>
+                                        {% endif %}
+                                        {{ announcement.title }}
+                                    </h6>
+                                    <small class="text-muted">{{ announcement.created_at.strftime('%b %d, %Y') }}</small>
+                                </div>
+                                <p class="mb-1 text-muted">{{ announcement.content[:100] }}...</p>
+                                <small class="badge bg-secondary">{{ announcement.announcement_type.capitalize() }}</small>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-5">
+                        <i class="bi bi-inbox icon-xlarge"></i><br>
+                        You haven't created any posts yet
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="col-lg-4 mb-4">
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-person-badge"></i> Profile</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ current_user.full_name }}</p>
+                <p><strong>Email:</strong> {{ current_user.email }}</p>
+                {% if current_user.department %}
+                    <p><strong>Department:</strong> {{ current_user.department.name }}</p>
+                {% endif %}
+                <p><strong>Role:</strong> <span class="badge bg-success">Teacher</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('announcements.create') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle"></i> Create Announcement
+                    </a>
+                    <a href="{{ url_for('teacher.students') }}" class="btn btn-outline-info">
+                        <i class="bi bi-people"></i> View Students
+                    </a>
+                    <a href="{{ url_for('teacher.attendance') }}" class="btn btn-outline-warning">
+                        <i class="bi bi-clipboard-check"></i> Mark Attendance
+                    </a>
+                    <a href="{{ url_for('announcements.list_all') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-list-ul"></i> All Posts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
