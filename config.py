@@ -10,6 +10,11 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
         'sqlite:///' + os.path.join(basedir, 'attendance.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Improve stability with managed Postgres by pre-pinging and recycling connections
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': True,
+        'pool_recycle': 300,
+    }
     BACKEND_API_URL = os.environ.get('BACKEND_API_URL') or 'http://localhost:5001/api'
     
     # Upload folder for announcements and assignments

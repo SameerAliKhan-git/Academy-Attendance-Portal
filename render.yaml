@@ -15,6 +15,8 @@ services:
       - key: BACKEND_API_URL
         # TODO: Set to your backend's public URL when available
         value: http://localhost:5001/api
-      - key: DATABASE_URI
-        # Note: SQLite on Render is ephemeral; for production use managed Postgres
-        value: sqlite:////opt/render/project/src/attendance.db
+      # DATABASE_URI intentionally not set here. Configure it in the Render dashboard:
+      # - For internal connection:
+      #   postgresql+psycopg2://USER:PASSWORD@INTERNAL_HOST/DB
+      # - For external connection (requires TLS):
+      #   postgresql+psycopg2://USER:PASSWORD@EXTERNAL_HOST/DB?sslmode=require

@@ -8,6 +8,11 @@ def index():
     """Home page."""
     return render_template('index.html', title='Home')
 
+@main_bp.route('/health')
+def health():
+    """Simple health check endpoint for uptime/monitoring."""
+    return 'ok', 200
+
 @main_bp.route('/dashboard')
 @login_required
 def dashboard():
