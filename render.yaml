@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: academy-attendance-portal
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 3 -b 0.0.0.0:$PORT run:app
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: BACKEND_API_URL
+        # TODO: Set to your backend's public URL when available
+        value: http://localhost:5001/api
+      - key: DATABASE_URI
+        # Note: SQLite on Render is ephemeral; for production use managed Postgres
+        value: sqlite:////opt/render/project/src/attendance.db
